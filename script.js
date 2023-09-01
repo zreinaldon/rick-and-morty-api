@@ -20,22 +20,22 @@ const filterData = (result) => {
         return document.getElementById(element.lastElementChild.id);
     }).map((element) => {
         if(element.checked) {
-            console.log(element);
             filteredObject[element.name] = result[element.name];
         }
     })
 
-    return filteredObject;
+    if(Object.keys(filteredObject).length === 0) {
+        return result;
+    } else {
+        return filteredObject;
+    }
 }
-
-
 
 searchBtn.addEventListener('click', async () => {
     const result = await fetchF(inputValue.value);
 
     imgCharacter.setAttribute('src', result.image);
 
-    //containerCharacter.innerText = JSON.stringify(result, undefined, 1); //mostra todas as propriedades do objeto sem filtro 
     containerCharacter.innerText = JSON.stringify(filterData(result), undefined, 1);
 })
 
